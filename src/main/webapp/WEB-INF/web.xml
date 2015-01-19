@@ -13,7 +13,20 @@
 
   <filter>
     <description>
-      Open a Spring JPA Entity Manager instance at the beginning of each HTTP request and keep the instance available
+      Catches any exceptions generated while serving an HTTP request and logs the error message and full stack trace.
+    </description>
+    <display-name>errorLoggingFilter</display-name>
+    <filter-name>errorLoggingFilter</filter-name>
+    <filter-class>org.example.web.ErrorLoggingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>errorLoggingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <description>
+      Opens a Spring JPA Entity Manager instance at the beginning of each HTTP request and keep the instance available
       until the request processing has finished fully. This allows service and data access layers to have full access
       to JPA loaded entities and their associations throughout the full lifetime of the HTTP request and avoid
       lazy loading exceptions.
