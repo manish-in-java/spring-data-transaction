@@ -14,10 +14,10 @@
 
   <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
     <property name="defaultAutoCommit" value="false"/>
-    <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-    <property name="jdbcUrl" value="jdbc:mysql://localhost/catalog"/>
-    <property name="username" value="catalog"/>
-    <property name="password" value="catalog"/>
+    <property name="driverClass" value="${database.driver}"/>
+    <property name="jdbcUrl" value="${database.url}"/>
+    <property name="password" value="${database.password}"/>
+    <property name="username" value="${database.user}"/>
     <property name="idleConnectionTestPeriodInSeconds" value="120"/>
     <property name="idleMaxAgeInSeconds" value="240"/>
     <property name="maxConnectionsPerPartition" value="10"/>
@@ -29,9 +29,12 @@
 
   <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
     <property name="dataSource" ref="dataSource"/>
+    <property name="jpaDialect">
+      <bean class="org.example.data.ExtendedHibernateJpaDialect"/>
+    </property>
     <property name="jpaVendorAdapter">
       <bean id="hibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-        <property name="databasePlatform" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+        <property name="databasePlatform" value="org.hibernate.dialect.Oracle10gDialect"/>
         <property name="generateDdl" value="true"/>
         <property name="showSql" value="false"/>
       </bean>
