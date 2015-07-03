@@ -3,6 +3,7 @@ package org.example.service;
 import org.example.data.InvoiceRepository;
 import org.example.domain.Invoice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,12 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class BillingService
 {
   @Autowired
-  InvoiceNumberGenerator invoiceNumberGenerator;
+  private InvoiceNumberGenerator invoiceNumberGenerator;
 
   @Autowired
-  InvoiceRepository invoiceRepository;
+  private InvoiceRepository invoiceRepository;
 
-  @Retryable(maxAttempts = 40)
+  @Retryable(backoff = @Backoff(delay = 2000, multiplier = 2, random = true), maxAttempts = 40)
   public Invoice generateInvoice()
   {
     return invoiceRepository.save(new Invoice(String.format("%06d", invoiceNumberGenerator.next())));

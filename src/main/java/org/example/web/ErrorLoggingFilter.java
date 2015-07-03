@@ -11,12 +11,10 @@ public class ErrorLoggingFilter implements Filter
 {
   private static final Logger LOGGER = LoggerFactory.getLogger(ErrorLoggingFilter.class);
 
-  @Override
   public void destroy()
   {
   }
 
-  @Override
   public void doFilter(final ServletRequest request
       , final ServletResponse response
       , final FilterChain chain)
@@ -51,7 +49,6 @@ public class ErrorLoggingFilter implements Filter
     }
   }
 
-  @Override
   public void init(FilterConfig config) throws ServletException
   {
   }
