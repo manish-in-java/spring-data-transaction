@@ -1,4 +1,4 @@
-# Overview
+# Overview [![Build status](https://drone.io/github.com/manish-in-java/spring-data-transaction/status.png)](https://drone.io/github.com/manish-in-java/spring-data-transaction/latest) [![Code coverage](https://coveralls.io/repos/manish-in-java/spring-data-transaction/badge.svg?branch=master)](https://coveralls.io/r/manish-in-java/spring-data-transaction?branch=master)
 Demonstrates various techniques with the Spring framework for managing transactions
 in a typical application.
 
