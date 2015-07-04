@@ -7,14 +7,23 @@ import javax.servlet.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+/**
+ * Catches and logs any exceptions generated during a web request.
+ */
 public class ErrorLoggingFilter implements Filter
 {
   private static final Logger LOGGER = LoggerFactory.getLogger(ErrorLoggingFilter.class);
 
+  /**
+   * {@inheritDoc}
+   */
   public void destroy()
   {
   }
 
+  /**
+   * {@inheritDoc}
+   */
   public void doFilter(final ServletRequest request
       , final ServletResponse response
       , final FilterChain chain)
@@ -49,7 +58,10 @@ public class ErrorLoggingFilter implements Filter
     }
   }
 
-  public void init(FilterConfig config) throws ServletException
+  /**
+   * {@inheritDoc}
+   */
+  public void init(final FilterConfig config) throws ServletException
   {
   }
 }

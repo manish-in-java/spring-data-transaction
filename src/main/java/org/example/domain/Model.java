@@ -8,8 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+/**
+ * Represents a domain entity.
+ */
 @MappedSuperclass
-public abstract class Relation
+public abstract class Model
 {
   @Generated(GenerationTime.INSERT)
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -17,9 +20,9 @@ public abstract class Relation
   private Long id;
 
   /**
-   * Gets the unique identifier for this relation.
+   * Gets the unique identifier for this entity.
    *
-   * @return The unique identifier for this relation.
+   * @return The unique identifier for this entity.
    */
   public Long getID()
   {

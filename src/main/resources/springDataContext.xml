@@ -12,29 +12,26 @@
   <context:annotation-config/>
   <context:component-scan base-package="org.example.data"/>
 
-  <bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
-    <property name="defaultAutoCommit" value="false"/>
-    <property name="defaultTransactionIsolation" value="READ_COMMITTED"/>
-    <property name="driverClass" value="${database.driver}"/>
-    <property name="jdbcUrl" value="${database.url}"/>
-    <property name="password" value="${database.password}"/>
-    <property name="username" value="${database.user}"/>
-    <property name="idleConnectionTestPeriodInSeconds" value="120"/>
-    <property name="idleMaxAgeInSeconds" value="240"/>
-    <property name="maxConnectionsPerPartition" value="10"/>
-    <property name="minConnectionsPerPartition" value="5"/>
-    <property name="partitionCount" value="5"/>
-    <property name="acquireIncrement" value="5"/>
-    <property name="statementsCacheSize" value="100"/>
-  </bean>
-
   <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-    <property name="dataSource" ref="dataSource"/>
-    <!--property name="jpaDialect">
-      <bean class="org.example.data.ExtendedHibernateJpaDialect"/>
-    </property-->
+    <property name="dataSource">
+      <bean class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+        <property name="defaultAutoCommit" value="false"/>
+        <property name="defaultTransactionIsolation" value="READ_COMMITTED"/>
+        <property name="driverClass" value="${database.driver}"/>
+        <property name="jdbcUrl" value="${database.url}"/>
+        <property name="password" value="${database.password}"/>
+        <property name="username" value="${database.user}"/>
+        <property name="idleConnectionTestPeriodInSeconds" value="120"/>
+        <property name="idleMaxAgeInSeconds" value="240"/>
+        <property name="maxConnectionsPerPartition" value="10"/>
+        <property name="minConnectionsPerPartition" value="5"/>
+        <property name="partitionCount" value="5"/>
+        <property name="acquireIncrement" value="5"/>
+        <property name="statementsCacheSize" value="100"/>
+      </bean>
+    </property>
     <property name="jpaVendorAdapter">
-      <bean id="hibernateJpaAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+      <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
         <property name="databasePlatform" value="${database.dialect}"/>
         <property name="generateDdl" value="true"/>
         <property name="showSql" value="false"/>
@@ -49,5 +46,5 @@
 
   <jpa:repositories base-package="org.example.data"/>
 
-  <transaction:annotation-driven transaction-manager="transactionManager"/>
+  <transaction:annotation-driven/>
 </beans>
