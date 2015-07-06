@@ -1,5 +1,6 @@
 package org.example.web;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +11,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.ServletException;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -27,15 +30,30 @@ public class BillingControllerTest
   @Autowired
   private BillingController controller;
 
+  private ErrorLoggingFilter filter = new ErrorLoggingFilter();
+
   private MockMvc mock;
 
   /**
    * Sets up components required for the tests to run.
    */
   @Before
-  public void setup()
+  public void setup() throws ServletException
   {
-    mock = MockMvcBuilders.standaloneSetup(controller).build();
+    mock = MockMvcBuilders.standaloneSetup(controller)
+        .addFilters(filter)
+        .build();
+
+    filter.init(null);
+  }
+
+  /**
+   * Performs clean up after tests have run.
+   */
+  @After
+  public void teardown()
+  {
+    filter.destroy();
   }
 
   /**
